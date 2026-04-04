@@ -26,4 +26,15 @@ public class LoginSteps {
     public void user_should_be_redirected_to_the_products_page() {
         assertTrue(driver.getCurrentUrl().contains("inventory"));
     }
+    
+    @When("user enters invalid username and password")
+    public void user_enters_invalid_username_and_password() {
+        loginPage.login("wrong_user", "wrong_pass");
+    }
+
+    @Then("user should see an error message")
+    public void user_should_see_an_error_message() {
+        String error = loginPage.getErrorMessage();
+        assertTrue(error.contains("Epic sadface"));
+    }
 }

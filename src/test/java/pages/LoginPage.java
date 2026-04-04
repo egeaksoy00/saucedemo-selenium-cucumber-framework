@@ -4,6 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
+	
+	private By errorMessage = By.cssSelector("[data-test='error']");
+	
+	public String getErrorMessage() {
+	    return driver.findElement(errorMessage).getText();
+	}
 
     WebDriver driver;
 
