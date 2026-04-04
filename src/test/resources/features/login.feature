@@ -9,3 +9,9 @@ Feature: Login functionality
   Given user is on the login page
   When user enters invalid username and password
   Then user should see an error message
+  
+  Scenario: Add product to cart after login
+  Given user is on the login page
+  When user enters valid username and password
+  And user adds a product to the cart
+  Then user should see the product in the cart
