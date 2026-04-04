@@ -1,10 +1,8 @@
 package stepdefinitions;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
+import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
+import pages.LoginPage;
 import utils.DriverFactory;
 
 import static org.junit.Assert.assertTrue;
@@ -12,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginSteps {
 
     WebDriver driver = DriverFactory.getDriver();
+    LoginPage loginPage = new LoginPage(driver);
 
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
@@ -20,9 +19,7 @@ public class LoginSteps {
 
     @When("user enters valid username and password")
     public void user_enters_valid_username_and_password() {
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
+        loginPage.login("standard_user", "secret_sauce");
     }
 
     @Then("user should be redirected to the products page")
