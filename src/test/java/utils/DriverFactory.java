@@ -4,25 +4,34 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.HashMap;
+
 public class DriverFactory {
 
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            ChromeOptions options = new ChromeOptions();
+            String browser = ConfigReader.getProperty("browser");
 
-            options.addArguments("--disable-save-password-bubble");
-            options.addArguments("--disable-notifications");
-            options.addArguments("--disable-popup-blocking");
-            options.addArguments("--incognito");
+            if (browser.equalsIgnoreCase("chrome")) {
+                ChromeOptions options = new ChromeOptions();
 
-            options.setExperimentalOption("prefs", new java.util.HashMap<String, Object>() {{
-                put("credentials_enable_service", false);
-                put("profile.password_manager_enabled", false);
-            }});
+                options.addArguments("--disable-save-password-bubble");
+                options.addArguments("--disable-notifications");
+                options.addArguments("--disable-popup-blocking");
+                options.addArguments("--incognito");
 
-            driver = new ChromeDriver(options);
+                HashMap<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+
+                options.setExperimentalOption("prefs", prefs);
+
+                driver = new ChromeDriver(options);
+            } else {
+                throw new RuntimeException("Unsupported browser: " + browser);
+            }
         }
         return driver;
     }
