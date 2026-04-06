@@ -7,6 +7,7 @@ import pages.CartPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
+import utils.ConfigReader;
 import utils.DriverFactory;
 
 import static org.junit.Assert.assertEquals;
@@ -24,8 +25,7 @@ public class LoginSteps {
 	CheckoutPage checkoutPage = new CheckoutPage(driver);
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
-        driver.get("https://www.saucedemo.com");
-    }
+    	driver.get(ConfigReader.getProperty("baseUrl"));    }
 
     //Senaryo 1
     @When("user enters valid username and password")
