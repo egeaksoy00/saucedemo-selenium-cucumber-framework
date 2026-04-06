@@ -82,4 +82,20 @@ public class LoginSteps {
         String message = checkoutPage.getCompletionMessage();
         assertTrue(message.contains("Thank you"));
     }
+    
+    //Senaryo 5 Data-driven
+    @When("user enters username {string} and password {string}")
+    public void user_enters_username_and_password(String username, String password) {
+        loginPage.login(username, password);
+    }
+
+    @Then("login result should be {string}")
+    public void login_result_should_be(String result) {
+        if (result.equals("success")) {
+            assertTrue(driver.getCurrentUrl().contains("inventory"));
+        } else if (result.equals("error")) {
+            String errorMessage = loginPage.getErrorMessage();
+            assertTrue(errorMessage.contains("Epic sadface"));
+        }
+    }
 }

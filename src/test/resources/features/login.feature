@@ -23,3 +23,14 @@ Feature: Login functionality
   And user proceeds to checkout
   And user enters checkout information
   Then user should complete the checkout successfully
+  
+  Scenario Outline: Login with multiple credential sets
+  Given user is on the login page
+  When user enters username "<username>" and password "<password>"
+  Then login result should be "<result>"
+
+Examples:
+  | username        | password     | result  |
+  | standard_user   | secret_sauce | success |
+  | locked_out_user | secret_sauce | error   |
+  | wrong_user      | wrong_pass   | error   |
