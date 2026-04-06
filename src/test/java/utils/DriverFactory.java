@@ -25,8 +25,15 @@ public class DriverFactory {
                 HashMap<String, Object> prefs = new HashMap<>();
                 prefs.put("credentials_enable_service", false);
                 prefs.put("profile.password_manager_enabled", false);
-
                 options.setExperimentalOption("prefs", prefs);
+
+                String ci = System.getenv("CI");
+                if ("true".equalsIgnoreCase(ci)) {
+                    options.addArguments("--headless=new");
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
+                    options.addArguments("--window-size=1920,1080");
+                }
 
                 driver = new ChromeDriver(options);
             } else {
