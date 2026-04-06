@@ -1,11 +1,11 @@
 Feature: Login functionality
 
   Scenario: Successful login with valid credentials
-    Given user is on the login page
-    When user enters valid username and password
-    Then user should be redirected to the products page
+  Given user is on the login page
+  When user enters valid username and password
+  Then user should be redirected to the products page
     
-    Scenario: Unsuccessful login with invalid credentials
+  Scenario: Unsuccessful login with invalid credentials
   Given user is on the login page
   When user enters invalid username and password
   Then user should see an error message
@@ -15,3 +15,11 @@ Feature: Login functionality
   When user enters valid username and password
   And user adds a product to the cart
   Then user should see the product in the cart
+  
+  Scenario: Complete checkout successfully
+  Given user is on the login page
+  When user enters valid username and password
+  And user adds a product to the cart
+  And user proceeds to checkout
+  And user enters checkout information
+  Then user should complete the checkout successfully

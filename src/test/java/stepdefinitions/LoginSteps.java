@@ -4,6 +4,7 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 
 import pages.CartPage;
+import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 import utils.DriverFactory;
@@ -20,7 +21,7 @@ public class LoginSteps {
 	ProductsPage productsPage = new ProductsPage(driver);
 	CartPage cartPage = new CartPage(driver);
 	String expectedProductName;
-    
+	CheckoutPage checkoutPage = new CheckoutPage(driver);
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
         driver.get("https://www.saucedemo.com");
@@ -61,5 +62,24 @@ public class LoginSteps {
     public void user_should_see_the_product_in_the_cart() {
         String actualProductName = cartPage.getCartItemName();
         assertEquals(expectedProductName, actualProductName);
+    }
+    
+    //Senaryo 4 
+    
+    @When("user proceeds to checkout")
+    public void user_proceeds_to_checkout() {
+        cartPage.clickCheckout();
+    }
+
+    @When("user enters checkout information")
+    public void user_enters_checkout_information() {
+        checkoutPage.completeCheckoutInfo("Ege", "Aksoy", "06830");
+        checkoutPage.clickFinish();
+    }
+
+    @Then("user should complete the checkout successfully")
+    public void user_should_complete_the_checkout_successfully() {
+        String message = checkoutPage.getCompletionMessage();
+        assertTrue(message.contains("Thank you"));
     }
 }
