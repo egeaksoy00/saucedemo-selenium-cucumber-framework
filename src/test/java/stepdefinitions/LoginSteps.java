@@ -2,10 +2,13 @@ package stepdefinitions;
 
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
+
+import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 import utils.DriverFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class LoginSteps {
@@ -15,7 +18,8 @@ public class LoginSteps {
     LoginPage loginPage = new LoginPage(driver);
 
 	ProductsPage productsPage = new ProductsPage(driver);
-
+	CartPage cartPage = new CartPage(driver);
+	String expectedProductName;
     
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
@@ -48,13 +52,14 @@ public class LoginSteps {
     //Senaryo 3
     @When("user adds a product to the cart")
     public void user_adds_a_product_to_the_cart() {
+        expectedProductName = productsPage.getFirstProductName();
         productsPage.addFirstProductToCart();
         productsPage.clickCart();
     }
 
     @Then("user should see the product in the cart")
     public void user_should_see_the_product_in_the_cart() {
-        String currentUrl = driver.getCurrentUrl();
-        assertTrue(currentUrl.contains("cart"));
+        String actualProductName = cartPage.getCartItemName();
+        assertEquals(expectedProductName, actualProductName);
     }
 }

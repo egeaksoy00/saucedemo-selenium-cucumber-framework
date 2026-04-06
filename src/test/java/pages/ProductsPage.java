@@ -16,7 +16,12 @@ public class ProductsPage {
 
     // Cart ikon
     private By cartIcon = By.className("shopping_cart_link");
+    
+    private By firstProductName = By.className("inventory_item_name");
 
+    public String getFirstProductName() {
+        return driver.findElement(firstProductName).getText();
+    }
     // Actions
     public void addFirstProductToCart() {
         driver.findElement(firstAddToCartButton).click();
